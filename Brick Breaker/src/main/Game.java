@@ -3,6 +3,11 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 import javax.swing.JPanel;
 
@@ -32,6 +37,7 @@ public class Game extends JPanel{
  	private int totalBallCount = 1;
  	private int totalBricks = 0;
  	private int level;
+ 	
  	
 	public Game(int level) {
 		paddle = new Paddle(Frame.WIDTH/2-50, 400);
@@ -92,6 +98,7 @@ public class Game extends JPanel{
 						Controller.score = score;
 						Controller.switchStates(Controller.STATE.WINSCREEN);
 					}
+					
 					bricks[i].hasDied = false;
 				}
 				if(bricks[i].dropPowerup) {
@@ -112,7 +119,7 @@ public class Game extends JPanel{
 						powerups[i] = null;
 					}
 					if(paddle.isColliding(powerups[i])) {	
-						if(powerups[i].powerup == 1) { //Add another ball
+						if(powerups[i].powerup == 1) {   //Add another ball
 							for(int j = 0; j < balls.length; j++) {
 								if(balls[j] == null) {
 									balls[j] = new Ball(Frame.WIDTH/2, 350, false);
@@ -121,10 +128,10 @@ public class Game extends JPanel{
 								}
 							}
 						}
-						if(powerups[i].powerup == 2) { //grow paddle
+						if(powerups[i].powerup == 2) {   //grow paddle
 							paddle.width += 15;
 						}
-						if(powerups[i].powerup == 3) { //fire ball
+						if(powerups[i].powerup == 3) {    //fire ball
 							for(int j = 0; j < balls.length; j++) {
 								if(balls[j] != null) {
 									balls[j].setOnFire(4);
@@ -197,10 +204,10 @@ public class Game extends JPanel{
 		}
 		
 		g.setColor(Color.yellow);
-		g.fillRect(0, Frame.HEIGHT-50, Frame.WIDTH, 50);
+		g.fillRect(0, Frame.HEIGHT-40, Frame.WIDTH,50);   //was 50, 50
 		g.setColor(Color.white);
 		g.setFont(Controller.smallFont);
-		g.drawString("Score: " + score, 20, Frame.HEIGHT-32);
+		g.drawString("Score: " + score, 20, Frame.HEIGHT-32);   //was 32
 		g.drawImage(lives, 100, Frame.HEIGHT-45, 15, 15, null);
 		g.drawString(": " + livesLeft, 120, Frame.HEIGHT-32);
 	}

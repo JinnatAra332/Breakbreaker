@@ -27,7 +27,7 @@ public class PickLevel {
 	Rectangle[] arrows = {new Rectangle(5, Frame.HEIGHT-70, 50, 50),
 						  new Rectangle(Frame.WIDTH-60, Frame.HEIGHT-70, 50, 50)};
 	
-	
+	Rectangle highscores = new Rectangle(50, 390, 380, 25);
 
 	public PickLevel() {
 		arrow = new ImageLoader(ImageLoader.arrow).getImage();
@@ -88,6 +88,20 @@ public class PickLevel {
 				g.drawImage(locked, levels[i].x, levels[i].y, levels[i].width, levels[i].height, null);
 			}
 		}
+		
+		//highscores
+		
+		g.drawRect(highscores.x, highscores.y,highscores.width, highscores.height);
+		g.drawString("Highest Score", Frame.WIDTH/2-g.getFontMetrics().stringWidth("Highest Score")/2, 410);
+		if(highscores.contains(Controller.mousePoint)) {
+			g.setColor(new Color(200, 200, 200, 100));
+			g.fillRect(highscores.x, highscores.y, highscores.width, highscores.height);
+			g.setColor(Color.black);
+		}
+		
+		
+		
+		
 		for(int i = 0; i < arrows.length; i++) {
 			if(arrows[i].contains(Controller.mousePoint)) {
 				g.setColor(new Color(255, 255, 255, 150));

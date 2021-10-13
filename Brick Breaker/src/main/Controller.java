@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import main.HighScore;
+import main.Controller.STATE;
 import files.Files;
 import handlers.KeyHandler;
 import handlers.MouseHandler;
@@ -21,8 +23,9 @@ public class Controller extends JPanel implements Runnable {
 		GAME,
 		GAMEOVER,
 		WINSCREEN,
-		PICKUSERLEVEL,
-		CREATELEVEL,
+		SCORES,
+		ENDSCREEN,
+		HighScore,
 	}
 
 	private Thread thread;
@@ -34,6 +37,7 @@ public class Controller extends JPanel implements Runnable {
 	private static GameOver gameOver;
 	private static WinScreen winScreen;
 	private static MainMenu menu;
+	private static HighScore highscores;
 	private PickLevel pickLevel;
 	
 	public static Point mousePoint = new Point(0, 0);
@@ -46,6 +50,8 @@ public class Controller extends JPanel implements Runnable {
 	private double fps;
 	public static int score = 0;
 	public static int level = 0;
+	
+	
 	
 	public Controller() {
 		super();
@@ -69,6 +75,7 @@ public class Controller extends JPanel implements Runnable {
 		menu = new MainMenu();
 		Files.init();
 		pickLevel = new PickLevel();
+		highscores = new HighScore();
 	}
 
 	public void run() {
@@ -108,6 +115,11 @@ public class Controller extends JPanel implements Runnable {
 			winScreen.tick();
 			winScreen.render(g);
 			break;
+		case HighScore:
+			highscores.init();
+			highscores.render(g);
+			break;
+			
 		default:
 			break;
 	}
@@ -136,4 +148,42 @@ public class Controller extends JPanel implements Runnable {
 		Controller.level = level;
 		Controller.state = state;
 	}
-}
+	
+	//HIGHEST
+	
+	public void render() {
+		if(state == STATE.GAME) {
+			game.render(g);
+			}
+		if(state == STATE.MENU) {
+			menu.render(g);
+		}
+		if(state == STATE.SCORES) {
+			highscores.render(g);
+		}
+		if(state == STATE.WINSCREEN) {
+			winScreen.render(g);
+		}
+
+		Graphics g2 = getGraphics();
+		g2.drawImage(image, 0, 0, null);
+		g2.dispose();
+	}
+	public static void switchClasses(STATE menu2) {
+		state = menu2;
+		if(menu2 == STATE.GAME) {
+			game.tick();
+		}
+		if(state == STATE.SCORES) {
+			highscores.init();
+		}
+		if(state == STATE.WINSCREEN) {
+			winScreen.tick();
+		}
+		if(state == STATE.MENU) {
+			menu.tick();
+		}
+	}
+		
+	}
+
