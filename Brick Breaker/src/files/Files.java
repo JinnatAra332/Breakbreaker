@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Files {
 	
 	private static String filePath = getDefaultDirectory() + "/BrickBreaker/";
-	public static String LEVELPATH = getDefaultDirectory() + "/BrickBreaker/Levels.txt";
+	public static String LEVELPATH = getDefaultDirectory() + "/BrickBreaker/Highscore.txt";
 	
 	public Files() {
 		
@@ -19,7 +19,7 @@ public class Files {
 		createDir(filePath);
 		createFile(LEVELPATH);
 		for(int i = 0; i < 8; i++) {
-			createLevel(filePath + "CustomLevel" + i + ".txt");
+			createLevel(filePath + "Highscore" + i + ".txt");
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class Files {
 	}
 
 	public static int[][] readLevel(int level) {
-		File file = new File(filePath + "CustomLevel" + level + ".txt");
+		File file = new File(filePath + "Highscore" + level + ".txt");
 		int[][] grid = new int[8][10];
 		if (file.exists()) {
 			Scanner scanner = null;
@@ -68,7 +68,7 @@ public class Files {
 			scanner.close();
 			return grid;
 		} else {
-			createFile(filePath + "CustomLevel" + level + ".txt");
+			createFile(filePath + "Highscore" + level + ".txt");
 			return grid;
 		}
 		
@@ -81,9 +81,9 @@ public class Files {
 	}
 
 	public static void SaveLevel(int level, int[][] grid) {
-		deleteFile(filePath + "CustomLevel" + level + ".txt");
-		createLevel(filePath + "CustomLevel" + level + ".txt");
-		writeLevel(new File(filePath + "CustomLevel" + level + ".txt"), level, grid);
+		deleteFile(filePath + "Highscore" + level + ".txt");
+		createLevel(filePath + "Highscore" + level + ".txt");
+		writeLevel(new File(filePath + "Highscore" + level + ".txt"), level, grid);
 	}
 	
 	public static void writeLevel(File file, int level, int[][] grid) {
@@ -182,9 +182,6 @@ public class Files {
 		String OS = System.getProperty("os.name").toUpperCase();
 		if (OS.contains("WIN")) {
 			return System.getenv("APPDATA");
-		}
-		if (OS.contains("MAC")) {
-			return System.getProperty("user.home") + "/Library/Application Support";
 		}
 		return System.getProperty("user.home");
 	}

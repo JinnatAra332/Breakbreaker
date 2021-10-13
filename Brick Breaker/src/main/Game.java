@@ -204,7 +204,7 @@ public class Game extends JPanel{
 		}
 		
 		g.setColor(Color.yellow);
-		g.fillRect(0, Frame.HEIGHT-40, Frame.WIDTH,50);   //was 50, 50
+		g.fillRect(0, Frame.HEIGHT-	50, Frame.WIDTH,50);   //was 50, 50
 		g.setColor(Color.white);
 		g.setFont(Controller.smallFont);
 		g.drawString("Score: " + score, 20, Frame.HEIGHT-32);   //was 32
